@@ -3,6 +3,11 @@
 
 #include "benchmark/benchmark.h"
 
+/* Needed to detect STL */
+#include <cstdlib>
+
+// clang-format off
+
 #ifndef __has_feature
 #define __has_feature(x) 0
 #endif
@@ -67,6 +72,10 @@
 #define BENCHMARK_OS_SOLARIS 1
 #endif
 
+#if defined(__ANDROID__) && defined(__GLIBCXX__)
+#define BENCHMARK_STL_ANDROID_GNUSTL 1
+#endif
+
 #if !__has_feature(cxx_exceptions) && !defined(__cpp_exceptions) \
      && !defined(__EXCEPTIONS)
   #define BENCHMARK_HAS_NO_EXCEPTIONS
@@ -85,5 +94,7 @@
 #else
   #define BENCHMARK_UNREACHABLE() ((void)0)
 #endif
+
+// clang-format on
 
 #endif  // BENCHMARK_INTERNAL_MACROS_H_
